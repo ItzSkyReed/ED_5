@@ -3,12 +3,11 @@
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%; /* Ширина карточки */
-    margin-bottom: 20px;
-    margin-top: 20px;
+    width: 600px;
+    margin-bottom: 10px;
+    margin-top: 10px;
     text-align: left;
-    padding-bottom: 5px;
-    padding-top: 5px;
+    padding: 10px 20px;
 }
 
 /* Стили для заголовка карточки */
@@ -29,5 +28,68 @@
 
 /* Стили для жирного текста в параграфах */
 .product-card p strong {
+    color: #333;
+}
+
+.description {
+    white-space: normal; /* Позволяет переносу текста на новую строку */
+    word-wrap: break-word; /* Разбивает слова, если они не помещаются */
+    overflow-wrap: break-word; /* Современный аналог word-wrap для переноса длинных слов */
+    max-width: 100%; /* Чтобы блок не выходил за пределы родителя */
+    display: block; /* Делаем описание блочным элементом */
+}
+
+/* Стили для полей ввода и текстовой области */
+.product-card input,
+.product-card textarea {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Стили для текстовой области */
+.product-card textarea {
+    resize: none;
+    height: 130px;
+    width: 100%;
+}
+
+/* Стили для кнопок */
+.product-card button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-self: center;
+    width: 100%;
+    margin-bottom: 10px; /* Отступ между кнопками */
+}
+
+.product-card button:hover {
+    background-color: #0056b3;
+}
+
+/* Стили для кнопки "Удалить" */
+.delete-button {
+    background-color: #f44336;
+}
+
+.delete-button:hover {
+    background-color: #e53935;
+}
+
+/* Стили для меток */
+.product-card label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
     color: #333;
 }

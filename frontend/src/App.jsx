@@ -14,14 +14,14 @@ const renderPage = () => {
         case 'main':
             return <MarkForm />;
         case 'database':
-            return null;
+            return <ModelsList source="database" />;
         case 'file':
             return (
                 <>
                     <GetFile />
                     <FileLoading />
                     <h1>Список Моделей</h1>
-                    <ModelsList />
+                    <ModelsList source="file" />
                 </>
             );
         default:

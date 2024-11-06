@@ -3,7 +3,7 @@ export default class FormHandler {
         return JSON.stringify(data);
     }
 
-    public static async sendFormData(data: any, saveOption: 'database' | 'file'): Promise<void> {
+    public static async sendFormData(data: any, saveOption: 'database' | 'file'): Promise<boolean> {
         const jsonData = this.createJSON(data);
 
         // Выбор URL в зависимости от метода сохранения
@@ -23,12 +23,14 @@ export default class FormHandler {
 
             if (response.ok) {
                 alert("Успешная отправка!");
+                return true; // Успех
             } else {
                 const errorData = await response.json();
                 throw new Error(errorData.error || "Ошибка отправки");
             }
         } catch (error: any) {
             alert(error.message);
+            return false; // Ошибка
         }
     }
 }

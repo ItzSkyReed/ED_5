@@ -49,7 +49,7 @@ class MarkJSON:
 
     @staticmethod
     def check_limits(json_data: dict) -> bool:
-        limits = {"brand": 32, "type": 32, "desc": 2000, "country": 32, "date": 11}
+        limits = {"brand": 32, "type": 32, "desc": 2000, "country": 32, "date": 32}
 
         # Проверяем длину значений в model_data
         if any(len(json_data[key]) == 0 or len(json_data[key]) > limit for key, limit in limits.items()):
