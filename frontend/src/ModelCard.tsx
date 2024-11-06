@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './ModelCard.css';
-import handleEdit from './HandleEdit'; // Импортируем функцию
+import handleEdit from './HandleEdit';
 
 // Вспомогательная функция для форматирования даты
 const formatDate = (unixTimestamp: number | null): string => {
@@ -26,7 +26,7 @@ interface Details {
 interface ModelCardProps {
     model: string;
     details: Details;
-    onDelete: (id: number) => void; // Функция для уведомления родительского компонента о удалении
+    onDelete: (id: number) => void; // Функция для уведомления родительского компонента об удалении
 }
 
 interface ModelCardState {
@@ -34,7 +34,7 @@ interface ModelCardState {
     editableDetails: Details;
 }
 
-// Компонент-класс для отображения карточки продукта
+
 class ModelCard extends Component<ModelCardProps, ModelCardState> {
     constructor(props: ModelCardProps) {
         super(props);
@@ -44,7 +44,7 @@ class ModelCard extends Component<ModelCardProps, ModelCardState> {
         };
     }
 
-    // Переключение режима редактирования
+
     toggleEditMode = () => {
         this.setState((prevState) => ({
             isEditing: !prevState.isEditing,
@@ -83,7 +83,6 @@ class ModelCard extends Component<ModelCardProps, ModelCardState> {
             const success = await handleEdit(id, model, brand, type, desc, country, date);
 
             if (success) {
-                // Если изменения прошли успешно, обновляем состояние
                 this.setState({
                     editableDetails: {
                         ...this.state.editableDetails,
@@ -109,10 +108,10 @@ class ModelCard extends Component<ModelCardProps, ModelCardState> {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({id: id}) // Преобразуем объект с id в строку JSON
+                    body: JSON.stringify({id: id})
                 });
                 if (response.ok) {
-                    this.props.onDelete(id); // Уведомляем родительский компонент о удалении
+                    this.props.onDelete(id);
                 } else {
                     alert('Ошибка при удалении');
                 }

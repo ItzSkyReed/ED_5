@@ -23,7 +23,6 @@ def change_model_db(request: WSGIRequest):
 
     # Проверяем данные с помощью `MarkJSON.validate` и продолжаем только при успехе
     mark_id = mark_data.pop('id', None)
-    print(mark_data)
     response = MarkJSON.validate(mark_data)
     if response.status_code == status.HTTP_200_OK:
         try:
@@ -44,7 +43,7 @@ def change_model_db(request: WSGIRequest):
 
 
 @api_view(['POST'])
-def add_user_json_to_db(request: WSGIRequest):
+def send_json_form_db(request: WSGIRequest):
     if not request.body:
         return Response({'error': 'Пустое тело запроса'}, status=status.HTTP_400_BAD_REQUEST)
     try:
@@ -59,8 +58,21 @@ def add_user_json_to_db(request: WSGIRequest):
             return Response(status=status.HTTP_200_OK)
 
 
+@api_view(['GET'])
+def get_filtered_models(request: WSGIRequest):
+    search_query = request.GET.get('query', '')
+    return JsonResponse(DBModel.get_filtered_models(search_query), status=status.HTTP_200_OK)
+
+@api_view(['DELETE'])
+def delete_model_db(request):
+    try:
+        DBModel.delete_from_database(json.loads(request.body)["id"])
+        return Response({"message": "Модель успешно удалена."}, status=status.HTTP_204_NO_CONTENT)
+    except DBModel.DoesNotExist:
+        return Response({"error": "Модель не найдена."}, status=status.HTTP_404_NOT_FOUND)
+
 @api_view(['POST'])
-def get_user_json(request: WSGIRequest):
+def send_json_form(request: WSGIRequest):
     if not request.body:
         return Response({'error': 'Пустое тело запроса'}, status=status.HTTP_400_BAD_REQUEST)
     try:
@@ -75,7 +87,7 @@ def get_user_json(request: WSGIRequest):
 
 
 @api_view(['POST'])
-def get_json_file(request: WSGIRequest):
+def send_json_as_file(request: WSGIRequest):
     if 'file' not in request.FILES:
         return Response(status=status.HTTP_400_BAD_REQUEST, data={'error': 'Файл не найден'})
     json_file = request.FILES['file']
@@ -96,7 +108,7 @@ def get_json_file(request: WSGIRequest):
 
 
 @api_view(['GET'])
-def get_data(request: WSGIRequest):
+def download_data_file(request: WSGIRequest):
     result = get_data_json()
     response = StreamingHttpResponse(result, content_type='application/json', status=status.HTTP_200_OK)
 
@@ -110,16 +122,3 @@ def get_data(request: WSGIRequest):
 def get_data_content(request: WSGIRequest):
     result = get_data_json()
     return JsonResponse(json.loads(result), status=status.HTTP_200_OK)
-
-
-@api_view(['GET'])
-def get_user_json_db(request: WSGIRequest):
-    return JsonResponse(DBModel.get_all_models_as_json_dict(), status=status.HTTP_200_OK)
-
-@api_view(['DELETE'])
-def delete_model_db(request):
-    try:
-        DBModel.delete_from_database(json.loads(request.body)["id"])
-        return Response({"message": "Модель успешно удалена."}, status=status.HTTP_204_NO_CONTENT)
-    except DBModel.DoesNotExist:
-        return Response({"error": "Модель не найдена."}, status=status.HTTP_404_NOT_FOUND)

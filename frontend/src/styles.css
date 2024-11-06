@@ -118,3 +118,18 @@ body {
     font-size: 16px;
     cursor: pointer;
 }
+
+/* Стили для строки поиска */
+.search-input {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.search-input::placeholder {
+    color: #ccc;
+}

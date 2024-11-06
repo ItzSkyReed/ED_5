@@ -6,7 +6,7 @@ interface HeaderProps {
     activePage: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ onPageChange, activePage }) => {
+const Header: React.FC<HeaderProps> = ({onPageChange, activePage}) => {
     return (
         <div className="header">
             <button

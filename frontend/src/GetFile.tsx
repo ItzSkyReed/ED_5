@@ -5,7 +5,7 @@ class GetFile extends React.Component {
 
     handleDownload = async () => {
         try {
-            const response = await fetch('http://localhost:8000/get/get_data', {
+            const response = await fetch('http://localhost:8000/get/download_data_file', {
                 method: 'GET',
             });
 

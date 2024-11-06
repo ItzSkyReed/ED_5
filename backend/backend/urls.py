@@ -17,15 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from app import views
-
+# ОТ ЛИЦА ЮЗЕРА
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('post/send_json_file', views.get_user_json),
-    path('post/send_json_in_file', views.get_json_file),
-    path('get/get_data', views.get_data),
+    path('post/send_json_form', views.send_json_form),
+    path('post/send_json_as_file', views.send_json_as_file),
+    path('get/download_data_file', views.download_data_file),
     path('get/get_data_content', views.get_data_content),
-    path('post/send_json_db', views.add_user_json_to_db),
-    path('get/get_user_json_db', views.get_user_json_db),
+
+    path('post/send_json_form_db', views.send_json_form_db),
+    path('get/get_filtered_models', views.get_filtered_models),
     path('put/change_model_db', views.change_model_db),
     path('delete/delete_model_db', views.delete_model_db),
 ]

@@ -6,11 +6,10 @@ export default class FormHandler {
     public static async sendFormData(data: any, saveOption: 'database' | 'file'): Promise<boolean> {
         const jsonData = this.createJSON(data);
 
-        // Выбор URL в зависимости от метода сохранения
         const url =
             saveOption === 'database'
-                ? 'http://localhost:8000/post/send_json_db'
-                : 'http://localhost:8000/post/send_json_file';
+                ? 'http://localhost:8000/post/send_json_form'
+                : 'http://localhost:8000/post/send_json_form_db';
 
         try {
             const response = await fetch(url, {
@@ -23,14 +22,14 @@ export default class FormHandler {
 
             if (response.ok) {
                 alert("Успешная отправка!");
-                return true; // Успех
+                return true;
             } else {
                 const errorData = await response.json();
                 throw new Error(errorData.error || "Ошибка отправки");
             }
         } catch (error: any) {
             alert(error.message);
-            return false; // Ошибка
+            return false;
         }
     }
 }

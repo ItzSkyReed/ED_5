@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import When, Case, Value, IntegerField, Q
 
 
 class DBModel(models.Model):
@@ -51,17 +52,35 @@ class DBModel(models.Model):
             raise cls.DoesNotExist
 
     @classmethod
-    def get_all_models_as_json_dict(cls):
+    def get_filtered_models(cls, query=None):
         data = {}
+        models = cls.objects.all()
 
-        for model in cls.objects.all():
-            # Если model.date — это строка, сначала преобразуем её в datetime  # Убедитесь, что формат совпадает с вашим
+        if query:
+            models = models.annotate(
+                relevance=Case(
+                    When(model__iexact=query, then=Value(1)),
+                    When(brand__iexact=query, then=Value(2)),
+                    When(type__iexact=query, then=Value(3)),
+                    When(country__iexact=query, then=Value(4)),
+                    When(desc__iexact=query, then=Value(5)),
+                    default=Value(6),
+                    output_field=IntegerField()
+                )
+            ).filter(
+                Q(model__icontains=query) |
+                Q(brand__icontains=query) |
+                Q(type__icontains=query) |
+                Q(country__icontains=query) |
+                Q(desc__icontains=query)
+            ).order_by('relevance')
 
+        for model in models:
             data[model.model] = {
                 "id": model.id,
                 "brand": model.brand,
                 "type": model.type,
-                "date": int(datetime.strptime(str(model.date), '%Y-%m-%d').timestamp()),  # Теперь можно вызвать timestamp()
+                "date": int(datetime(model.date.year, model.date.month, model.date.day).timestamp()),
                 "country": model.country,
                 "desc": model.desc
             }

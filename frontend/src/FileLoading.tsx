@@ -19,7 +19,7 @@ class FileLoading extends React.Component {
             formData.append('file', file); // 'file' — это имя, с которым сервер будет получать файл
 
             try {
-                const response = await fetch('http://localhost:8000/post/send_json_file', {
+                const response = await fetch('http://localhost:8000/post/send_json_as_file', {
                     method: 'POST',
                     body: formData,
                 });
