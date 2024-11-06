@@ -1,0 +1,33 @@
+/* Основные стили для карточки продукта */
+.product-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Ширина карточки */
+    margin-bottom: 20px;
+    margin-top: 20px;
+    text-align: left;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+/* Стили для заголовка карточки */
+.product-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+    text-align: center;
+}
+
+/* Стили для параграфов в карточке */
+.product-card p {
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #555;
+    padding-left: 10px;
+}
+
+/* Стили для жирного текста в параграфах */
+.product-card p strong {
+    color: #333;
+}

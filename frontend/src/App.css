@@ -1,0 +1,45 @@
+html, body {
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+}
+
+.App {
+    padding-top: 80px; /* Отступ для размещения контента ниже зафиксированного header */
+}
+
+.App h1 {
+    text-align: center;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    left: 0; /* Добавлено для правильного позиционирования */
+    width: 100%;
+    background-color: #a1c4fd; /* Фон для header, чтобы он выделялся на общем фоне */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Лёгкая тень для отделения от остального контента */
+    z-index: 1000; /* Чтобы header отображался поверх всего остального контента */
+}
+
+.nav-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: white;
+    background-color: #4CAF50;
+}
+
+.nav-button.active {
+    background-color: #45a049;
+}
+
+.nav-button:hover {
+    background-color: #388E3C;
+}

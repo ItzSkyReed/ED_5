@@ -1,0 +1,120 @@
+body {
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #a1c4fd, #c2e9fb);
+}
+
+/* Стили для кнопки загрузки файла */
+.file-upload-button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+/* Скрыть стандартный вид инпута файла */
+.file-upload-button::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+/* Стилизация контента внутри инпута */
+.file-upload-button::before {
+    content: "Загрузить JSON файл";
+    display: inline-block;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.file-upload-button:hover::after {
+    background-color: #4CAF50;
+}
+
+/* Эффект при наведении на псевдоэлемент */
+.file-upload-button:hover::before {
+    background-color: #45a049;
+    transition: 0.5s;
+}
+
+.wrapper {
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 600px;
+}
+
+.wrapper h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+.wrapper input,
+.wrapper textarea {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.wrapper button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-self: center;
+    width: 100%;
+}
+
+.wrapper button:hover {
+    background-color: #0056b3;
+}
+
+.wrapper label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.wrapper textarea {
+    resize: none;
+    height: 130px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+}
+
+.save-button {
+    flex: 1;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}

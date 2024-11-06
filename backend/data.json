@@ -1,0 +1,58 @@
+{
+    "Iphone 16": {
+        "brand": "Apple",
+        "type": "Phone",
+        "date": 1728086400,
+        "country": "USA",
+        "desc": "Айфон 16 новый"
+    },
+    "Iphone 11": {
+        "brand": "Apple",
+        "type": "Phone",
+        "date": 1728086400,
+        "country": "USA",
+        "desc": "Айфон 16 новый"
+    },
+    "Iphone 111": {
+        "brand": "Apple",
+        "type": "Phone",
+        "date": 1728086400,
+        "country": "USA",
+        "desc": "Айфон 16 новый"
+    },
+    "Iphone 11241": {
+        "brand": "Apple",
+        "type": "Phone",
+        "date": 1728086400,
+        "country": "USA",
+        "desc": "Айфон 16 новый"
+    },
+    "Iphone 1111": {
+        "brand": "Apple",
+        "type": "Phone",
+        "date": 1728086400,
+        "country": "USA",
+        "desc": "Айфон 16 новый"
+    },
+    "124S Ultra": {
+        "brand": "Samsung",
+        "type": "Smartphone",
+        "country": "South Korea",
+        "desc": "Новый телефон",
+        "date": 1730764800
+    },
+    "213213213": {
+        "brand": "123",
+        "type": "213",
+        "date": 1730764800,
+        "country": "312231321",
+        "desc": "123123"
+    },
+    "123132": {
+        "brand": "123",
+        "type": "213",
+        "date": 1730851200,
+        "country": "123",
+        "desc": "123123"
+    }
+}
