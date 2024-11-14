@@ -8,8 +8,8 @@ export default class FormHandler {
 
         const url =
             saveOption === 'database'
-                ? 'http://localhost:8000/post/send_json_form'
-                : 'http://localhost:8000/post/send_json_form_db';
+                ? 'http://localhost:8000/post/send_json_form_db'
+                : 'http://localhost:8000/post/send_json_form';
 
         try {
             const response = await fetch(url, {

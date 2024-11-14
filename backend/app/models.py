@@ -17,25 +17,25 @@ class DBModel(models.Model):
         return f"{self.brand} - {self.type}"
 
     @classmethod
-    def model_exists(cls, model_value):
-        return cls.objects.filter(model=model_value).exists()
+    def model_exists(cls, model_value, brand):
+        return cls.objects.filter(model=model_value, brand=brand).exists()
 
     @classmethod
-    def add_to_database(cls, model_value: str, brand: str, type: str, desc: str, country: str, date: str):
-        new_model = cls(model=model_value, brand=brand, type=type, desc=desc, country=country, date=date)
+    def add_to_database(cls, model_value: str, brand: str, model_type: str, desc: str, country: str, date: str):
+        new_model = cls(model=model_value, brand=brand, type=model_type, desc=desc, country=country, date=date)
         new_model.save()
         return new_model
 
     @classmethod
-    def update_model(cls, model_id: int, model_value: str, brand: str, type: str, desc: str, country: str, date: str):
-        if cls.objects.filter(model=model_value).exclude(id=model_id).exists():
-            raise ValidationError(f"Модель с именем '{model_value}' уже существует.")
+    def update_model(cls, model_id: int, model_value: str, brand: str, model_type: str, desc: str, country: str, date: str):
+        if cls.objects.filter(model=model_value, brand=brand).exclude(id=model_id).exists():
+            raise ValidationError(f"Модель '{model_value}' с брендом '{brand}' уже существует.")
 
         existing_model = cls.objects.get(id=model_id)
 
         existing_model.model = model_value
         existing_model.brand = brand
-        existing_model.type = type
+        existing_model.type = model_type
         existing_model.desc = desc
         existing_model.country = country
         existing_model.date = date

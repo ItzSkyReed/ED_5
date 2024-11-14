@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import './ModelCard.css';
 import handleEdit from './HandleEdit';
 
-// Вспомогательная функция для форматирования даты
 const formatDate = (unixTimestamp: number | null): string => {
     if (!unixTimestamp) return 'Неизвестно';
     const date = new Date(unixTimestamp * 1000);
@@ -13,7 +12,6 @@ const formatDate = (unixTimestamp: number | null): string => {
     });
 };
 
-// Интерфейсы для пропсов
 interface Details {
     id?: number;
     brand: string;
@@ -34,7 +32,6 @@ interface ModelCardState {
     editableDetails: Details;
 }
 
-
 class ModelCard extends Component<ModelCardProps, ModelCardState> {
     constructor(props: ModelCardProps) {
         super(props);
@@ -44,15 +41,14 @@ class ModelCard extends Component<ModelCardProps, ModelCardState> {
         };
     }
 
-
     toggleEditMode = () => {
         this.setState((prevState) => ({
             isEditing: !prevState.isEditing,
-            editableDetails: {...this.props.details} // Сбрасываем изменения, если редактирование отменено
+            // Обновляем editableDetails при входе в режим редактирования, чтобы подгрузить актуальные данные из props
+            editableDetails: !prevState.isEditing ? {...this.props.details} : prevState.editableDetails
         }));
     };
 
-    // Обработчики изменения значений в полях
     handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const {name, value} = e.target;
         this.setState((prevState) => ({
@@ -63,7 +59,6 @@ class ModelCard extends Component<ModelCardProps, ModelCardState> {
         }));
     };
 
-    // Обработчик изменения даты
     handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const unixTimestamp = e.target.value ? Math.floor(new Date(e.target.value).getTime() / 1000) : null;
         this.setState((prevState) => ({
@@ -74,7 +69,6 @@ class ModelCard extends Component<ModelCardProps, ModelCardState> {
         }));
     };
 
-    // Обработчик для сохранения изменений
     saveChanges = async () => {
         const {id, brand, type, date, country, desc} = this.state.editableDetails;
         const {model} = this.props;
@@ -98,7 +92,6 @@ class ModelCard extends Component<ModelCardProps, ModelCardState> {
         }
     };
 
-    // Функция для удаления
     deleteItem = async () => {
         const {id} = this.state.editableDetails;
         if (id !== undefined) {

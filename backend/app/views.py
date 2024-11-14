@@ -1,5 +1,7 @@
 import json
+import re
 from datetime import datetime
+from json import JSONDecodeError
 
 from django.core.exceptions import ValidationError
 from django.core.handlers.wsgi import WSGIRequest
@@ -12,6 +14,13 @@ from .utils import write_to_data, get_data_json
 from .models import DBModel
 
 
+def validate_no_html_tags(data: dict):
+    tag_re = re.compile(r'<[^>]+>')
+    for key, value in data.items():
+        if isinstance(value, str) and tag_re.search(value):
+            raise ValidationError(f"Поле '{key}' содержит HTML-теги, что недопустимо.")
+
+
 @api_view(['PUT'])
 def change_model_db(request: WSGIRequest):
     if not request.body:
@@ -21,7 +30,11 @@ def change_model_db(request: WSGIRequest):
     except json.JSONDecodeError:
         return Response({'error': 'Некорректный JSON'}, status=status.HTTP_400_BAD_REQUEST)
 
-    # Проверяем данные с помощью `MarkJSON.validate` и продолжаем только при успехе
+    try:
+        validate_no_html_tags(mark_data)
+    except ValidationError as e:
+        return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
     mark_id = mark_data.pop('id', None)
     response = MarkJSON.validate(mark_data)
     if response.status_code == status.HTTP_200_OK:
@@ -51,9 +64,14 @@ def send_json_form_db(request: WSGIRequest):
     except json.JSONDecodeError:
         return Response(status=status.HTTP_400_BAD_REQUEST, data={'error': 'Некорректный JSON'})
 
+    try:
+        validate_no_html_tags(mark_data)
+    except ValidationError as e:
+        return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
     response: Response = MarkJSON.validate(mark_data)
     if response.status_code == status.HTTP_200_OK:
-        if not DBModel.model_exists(mark_data["model"]):
+        if not DBModel.model_exists(mark_data["model"], mark_data["brand"]):
             DBModel.add_to_database(mark_data["model"], mark_data["brand"], mark_data["type"], mark_data["desc"], mark_data["country"], mark_data["date"])
             return Response(status=status.HTTP_200_OK)
 
@@ -63,13 +81,17 @@ def get_filtered_models(request: WSGIRequest):
     search_query = request.GET.get('query', '')
     return JsonResponse(DBModel.get_filtered_models(search_query), status=status.HTTP_200_OK)
 
+
 @api_view(['DELETE'])
 def delete_model_db(request):
     try:
         DBModel.delete_from_database(json.loads(request.body)["id"])
         return Response({"message": "Модель успешно удалена."}, status=status.HTTP_204_NO_CONTENT)
+    except JSONDecodeError:
+        return Response({"error": "Невалидный запрос на удаление."}, status=status.HTTP_400_BAD_REQUEST)
     except DBModel.DoesNotExist:
         return Response({"error": "Модель не найдена."}, status=status.HTTP_404_NOT_FOUND)
+
 
 @api_view(['POST'])
 def send_json_form(request: WSGIRequest):
